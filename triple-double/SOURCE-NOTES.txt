@@ -1,0 +1,14 @@
+Triple Double homepage concept — Severian Roth
+
+Design approach
+Large architectural imagery establishes the firm's context, while a restrained type system makes the investment, operations and management story easy to follow. Portfolio filters and a clear route to contact connect that first impression to practical next steps.
+
+Files
+Three Photoshop documents contain desktop (1440px), tablet (834px) and mobile (390px) layouts, each with named raster layers by component and its typography, color palette and button specifications. HTML, CSS and JavaScript provide editable text, layout and interaction source. Open index.html for the working preview or design.html for the presentation.
+
+Provenance
+Original visual layout and frontend code by Severian Roth. Company facts and property photography are drawn from the company's published website at https://tripledoublere.com/ and https://tripledoublere.com/portfolio/ . Photography remains the property of its respective rights holders and is not covered by the code license. The live preview loads photographs from the company's public image URLs.
+
+The 20+ experience and 1M+ commercial square-feet figures refer to the firm's published account of its experience and management companies, not investment performance. The four focus areas are urban assets, medical office, workforce housing and historic adaptive reuse. Images and property names are paired with their source portfolio entries.
+
+Code license: GPL-2.0-or-later, as in the portfolio repository. This is a homepage design concept, not the firm's live production website.
