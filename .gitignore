@@ -1,0 +1,5 @@
+verification*.json
+*.py
+*.log
+*.result.json
+__pycache__/

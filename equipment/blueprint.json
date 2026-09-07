@@ -1,0 +1,63 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "7.1"
+  },
+  "landingPage": "/",
+  "login": true,
+  "steps": [
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "url",
+        "url": "https://downloads.wordpress.org/theme/twentytwentyfive.1.5.zip"
+      },
+      "options": {
+        "activate": false
+      }
+    },
+    {
+      "step": "mkdir",
+      "path": "/wordpress/wp-content/themes/sr-equipment/templates"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-equipment/style.css",
+      "data": "/*\nTheme Name: Alder Equipment Hire\nTemplate: twentytwentyfive\nVersion: 1.0.0\nAuthor: Severian Roth\nLicense: GNU General Public License v2 or later\nLicense URI: https://www.gnu.org/licenses/gpl-2.0.html\n*/\n\n:root{font-family:Arial,Helvetica,sans-serif;color:#18312f;background:#f1f3eb;font-synthesis:none}*{box-sizing:border-box}body{margin:0}.preview{padding:11px 6%;font-size:11px;letter-spacing:.08em;background:#dbe4d6;display:flex;justify-content:space-between;gap:10px}.frame{max-width:1100px;margin:auto;padding:30px 52px 22px}header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #cbd2c5;padding-bottom:25px;gap:20px}.wordmark{font-size:27px;font-weight:900;letter-spacing:-1px}.wordmark small{display:block;font-weight:500;letter-spacing:.06em;font-size:9px;margin-top:4px}.division{font-size:12px;letter-spacing:.12em;text-transform:uppercase}.hero{display:grid;grid-template-columns:1.07fr 1fr;gap:48px;padding-top:42px}.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:700;margin:0 0 17px;color:#536f56}h1{font-size:57px;line-height:1.01;letter-spacing:-3px;margin:0 0 20px}h1 span{color:#718d54}p.intro{font-size:15px;line-height:1.55;max-width:355px;margin:0 0 28px;color:#57685d}.line{height:1px;background:#cbd2c5}.steps{display:flex;gap:15px;padding-top:20px;font-size:11px;color:#53655a}.steps b{display:block;font-size:14px;margin-bottom:7px;color:#233c31}.steps>div{flex:1}.form-card{background:white;border:1px solid #d6ddd2;padding:25px 27px;box-shadow:0 10px 24px #29432b0a}.card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}h2{margin:0;font-size:22px;letter-spacing:-.7px}.sample{font-size:10px;color:#527046;background:#ecf3e5;padding:6px 8px;white-space:nowrap}.hint{font-size:12px;color:#6a7669;margin:10px 0 20px;line-height:1.4}label{display:block;font-size:11px;font-weight:700;margin:14px 0 7px}input,select{width:100%;font:13px Arial;border:1px solid #c6d1c0;padding:11px 12px;background:#f8faf5;color:#233c31;border-radius:0;min-width:0}input:focus,select:focus,button:focus-visible{outline:2px solid #759654;outline-offset:2px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}button{font:700 13px Arial;cursor:pointer;width:100%;margin-top:19px;padding:15px;background:#223d31;color:white;border:0;text-align:left;display:flex;justify-content:space-between}.notice{font-size:11px;line-height:1.45;margin:11px 0 0;color:#63715e;min-height:32px}.types{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:35px}.type{border-top:2px solid #b5c5a5;padding:14px 0;display:flex;align-items:center;gap:12px}.type svg{width:54px;height:43px;flex-shrink:0;fill:none;stroke:#3e5b42;stroke-width:2;stroke-linejoin:round}.type h3{font-size:12px;margin:0 0 5px}.type p{font-size:10px;margin:0;color:#6b7969}footer{display:flex;justify-content:space-between;gap:16px;border-top:1px solid #cbd2c5;margin-top:22px;padding-top:15px;font-size:10px;line-height:1.45;color:#63715e}footer strong{color:#2c4735}a{color:inherit}@media(max-width:650px){.preview{padding:10px 20px;font-size:9px}.preview span:last-child{display:none}.frame{padding:23px 21px}.hero{grid-template-columns:1fr;gap:28px;padding-top:30px}h1{font-size:48px}.intro{max-width:100%!important}.form-card{padding:22px 20px}.types{grid-template-columns:1fr;margin-top:27px;gap:0}.type{padding:14px 0}.type h3{font-size:14px}.type p{font-size:12px}.division{font-size:10px}.wordmark{font-size:24px}footer{display:block}footer>div+div{margin-top:10px}.pair{gap:10px}}@page{size:1050px 890px;margin:0}@media print{.frame{padding-top:25px}.hero{padding-top:33px}.preview{print-color-adjust:exact}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}\n.samplebar{padding:8px 5%;background:#e6eade;color:#475b46;display:flex;justify-content:space-between;gap:15px;font:11px Arial}.samplebar a{font-weight:bold;text-decoration:underline;color:inherit}@media(max-width:650px){.samplebar{font-size:9px}}\n.wp-site-blocks{padding:0!important}.wp-block-post-content{margin:0!important}\n"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-equipment/functions.php",
+      "data": "<?php\nadd_action('wp_enqueue_scripts', function () { wp_enqueue_style('sr-demo',get_stylesheet_uri(),array(),'1.0.0'); wp_enqueue_script('sr-demo',get_stylesheet_directory_uri().'/app.js',array(),'1.0.0',true); });\nadd_filter('show_admin_bar','__return_false');\n"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-equipment/theme.json",
+      "data": "{\"version\": 3, \"settings\": {\"layout\": {\"contentSize\": \"1280px\", \"wideSize\": \"1280px\"}}, \"styles\": {\"spacing\": {\"blockGap\": \"0\", \"padding\": {\"top\": \"0\", \"bottom\": \"0\", \"left\": \"0\", \"right\": \"0\"}}}}"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-equipment/app.js",
+      "data": "\ndocument.querySelector('#enquiry').addEventListener('submit',event=>{event.preventDefault();const category=document.querySelector('#category').value;const location=document.querySelector('#location').value.trim();const duration=document.querySelector('#duration').value;const start=document.querySelector('#start').value;document.querySelector('#notice').textContent=`Preview: ${category} \u00b7 ${location} \u00b7 ${start} \u00b7 ${duration}. Nothing sent or reserved.`;});\n"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-equipment/templates/index.html",
+      "data": "<!-- wp:post-content {\"layout\":{\"type\":\"default\"}} /-->"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-equipment/templates/front-page.html",
+      "data": "<!-- wp:post-content {\"layout\":{\"type\":\"default\"}} /-->"
+    },
+    {
+      "step": "activateTheme",
+      "themeFolderName": "sr-equipment"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; wp_set_current_user(1); remove_filter('content_save_pre','wp_filter_post_kses'); $id=wp_insert_post(array('post_type'=>'page','post_title'=>\"Alder Equipment Hire\",'post_status'=>'publish','post_content'=>base64_decode('PCEtLSB3cDpodG1sIC0tPjxkaXYgY2xhc3M9InNhbXBsZWJhciI+PHNwYW4+V09SRFBSRVNTIERFTU8gwrcgU2V2ZXJpYW4gUm90aDwvc3Bhbj48YSBocmVmPSJodHRwczovL3BsYXlncm91bmQud29yZHByZXNzLm5ldC8/Ymx1ZXByaW50LXVybD1odHRwcyUzQSUyRiUyRnNldmVyaWFucm90aC5naXRodWIuaW8lMkZzZXJ2aWNlLXNpdGUtZXhhbXBsZXMlMkZlcXVpcG1lbnQlMkZibHVlcHJpbnQuanNvbiIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIiPk9wZW4gZWRpdGFibGUgV29yZFByZXNzIOKGlzwvYT48L2Rpdj4KPGRpdiBjbGFzcz0iZnJhbWUiPgo8aGVhZGVyPjxkaXYgY2xhc3M9IndvcmRtYXJrIj5BTERFUjxzcGFuIHN0eWxlPSJjb2xvcjojNzk5NzUyIj4uPC9zcGFuPjxzbWFsbD5BTERFUiBFUVVJUE1FTlQ8L3NtYWxsPjwvZGl2PjxkaXYgY2xhc3M9ImRpdmlzaW9uIj5GbGVldCAmIGVxdWlwbWVudCBoaXJlPC9kaXY+PC9oZWFkZXI+CjxtYWluPgo8ZGl2IGNsYXNzPSJoZXJvIj4KPHNlY3Rpb24+PHAgY2xhc3M9ImV5ZWJyb3ciPkZST00gUkVRVUlSRU1FTlQgVE8gRU5RVUlSWTwvcD48aDE+WW91ciBuZXh0IGpvYi48YnI+PHNwYW4+WW91ciBuZXh0IGhpcmUuPC9zcGFuPjwvaDE+PHAgY2xhc3M9ImludHJvIj5UZWxsIHVzIHdoYXQgeW91IG5lZWQsIHdoZXJlIGl04oCZcyBnb2luZyBhbmQgd2hlbi4gU3RhcnQgd2l0aCBhIHN0cmFpZ2h0Zm9yd2FyZCBoaXJlIGVucXVpcnkuPC9wPjxkaXYgY2xhc3M9ImxpbmUiPjwvZGl2PjxkaXYgY2xhc3M9InN0ZXBzIj48ZGl2PjxiPjAxPC9iPkNob29zZSBhIGNhdGVnb3J5PC9kaXY+PGRpdj48Yj4wMjwvYj5BZGQgeW91ciBwcm9qZWN0IGRldGFpbHM8L2Rpdj48ZGl2PjxiPjAzPC9iPkFzayBhYm91dCBhdmFpbGFiaWxpdHk8L2Rpdj48L2Rpdj48L3NlY3Rpb24+CjxzZWN0aW9uIGNsYXNzPSJmb3JtLWNhcmQiIGFyaWEtbGFiZWw9IkV4YW1wbGUgaGlyZSBlbnF1aXJ5Ij48ZGl2IGNsYXNzPSJjYXJkLXRvcCI+PGgyPlN0YXJ0IGFuIGVucXVpcnk8L2gyPjxzcGFuIGNsYXNzPSJzYW1wbGUiPkVYQU1QTEUgUkVRVUVTVDwvc3Bhbj48L2Rpdj48cCBjbGFzcz0iaGludCI+QSBzaG9ydCBzdGFydGluZyBwb2ludCBmb3IgdGhlIGhpcmUgdGVhbS48L3A+PGZvcm0gaWQ9ImVucXVpcnkiPjxsYWJlbCBmb3I9ImNhdGVnb3J5Ij5XaGF0IGRvIHlvdSBuZWVkPzwvbGFiZWw+PHNlbGVjdCBpZD0iY2F0ZWdvcnkiPjxvcHRpb24+RmxlZXQgdmVoaWNsZXM8L29wdGlvbj48b3B0aW9uPlNpdGUgZXF1aXBtZW50PC9vcHRpb24+PG9wdGlvbj5Qb3dlciAmIGRld2F0ZXJpbmc8L29wdGlvbj48L3NlbGVjdD48bGFiZWwgZm9yPSJsb2NhdGlvbiI+UHJvamVjdCBsb2NhdGlvbjwvbGFiZWw+PGlucHV0IGlkPSJsb2NhdGlvbiIgdmFsdWU9IkV4YW1wbGUgcHJvamVjdCBzaXRlIiByZXF1aXJlZCBtYXhsZW5ndGg9IjgwIj48ZGl2IGNsYXNzPSJwYWlyIj48ZGl2PjxsYWJlbCBmb3I9InN0YXJ0Ij5QcmVmZXJyZWQgc3RhcnQ8L2xhYmVsPjxpbnB1dCBpZD0ic3RhcnQiIHR5cGU9ImRhdGUiIHZhbHVlPSIyMDI2LTA5LTIxIiByZXF1aXJlZD48L2Rpdj48ZGl2PjxsYWJlbCBmb3I9ImR1cmF0aW9uIj5Fc3RpbWF0ZWQgZHVyYXRpb248L2xhYmVsPjxzZWxlY3QgaWQ9ImR1cmF0aW9uIj48b3B0aW9uPjEgd2Vlazwvb3B0aW9uPjxvcHRpb24gc2VsZWN0ZWQ+MiB3ZWVrczwvb3B0aW9uPjxvcHRpb24+MSBtb250aDwvb3B0aW9uPjwvc2VsZWN0PjwvZGl2PjwvZGl2PjxidXR0b24gdHlwZT0ic3VibWl0Ij5QcmV2aWV3IGhpcmUgcmVxdWVzdCA8c3BhbiBhcmlhLWhpZGRlbj0idHJ1ZSI+4oaXPC9zcGFuPjwvYnV0dG9uPjxwIGlkPSJub3RpY2UiIGNsYXNzPSJub3RpY2UiIHJvbGU9InN0YXR1cyI+RGVtbyBvbmx5LiBOb3RoaW5nIGlzIHNlbnQgYW5kIG5vIGF2YWlsYWJpbGl0eSBpcyBjb25maXJtZWQuPC9wPjwvZm9ybT48L3NlY3Rpb24+CjwvZGl2Pgo8ZGl2IGNsYXNzPSJ0eXBlcyIgYXJpYS1sYWJlbD0iSWxsdXN0cmF0aXZlIGhpcmUgY2F0ZWdvcmllcyI+CjxhcnRpY2xlIGNsYXNzPSJ0eXBlIj48c3ZnIHZpZXdCb3g9IjAgMCA2NCA0OCIgYXJpYS1oaWRkZW49InRydWUiPjxwYXRoIGQ9Ik01IDMyVjE5aDI2bDkgMSA4IDloMTB2MTBINXpNMzMgMjF2MTBoMTdNMTMgMTdoMjBNOCAyNWgyMCIvPjxjaXJjbGUgY3g9IjE3IiBjeT0iMzkiIHI9IjYiIGZpbGw9IiNmMWYzZWIiLz48Y2lyY2xlIGN4PSI0NyIgY3k9IjM5IiByPSI2IiBmaWxsPSIjZjFmM2ViIi8+PHBhdGggZD0iTTE3IDM3djRtMzAtNHY0Ii8+PC9zdmc+PGRpdj48aDM+RmxlZXQgdmVoaWNsZXM8L2gzPjxwPlN0YXJ0IHdpdGggeW91ciB0cmFuc3BvcnQgbmVlZHM8L3A+PC9kaXY+PC9hcnRpY2xlPgo8YXJ0aWNsZSBjbGFzcz0idHlwZSI+PHN2ZyB2aWV3Qm94PSIwIDAgNjQgNDgiIGFyaWEtaGlkZGVuPSJ0cnVlIj48cGF0aCBkPSJNMTMgMzhoMzlNMTkgMzdsOC0yMmg5bDEwIDIyTTE5IDI3aDI3TTI2IDE2VjdoMTN2OU0zMCA3VjNNMzUgN1YzTTE0IDM5djZtMzctNnY2Ii8+PC9zdmc+PGRpdj48aDM+U2l0ZSBlcXVpcG1lbnQ8L2gzPjxwPlRvb2xpbmcgYW5kIGFjY2VzcyBlbnF1aXJpZXM8L3A+PC9kaXY+PC9hcnRpY2xlPgo8YXJ0aWNsZSBjbGFzcz0idHlwZSI+PHN2ZyB2aWV3Qm94PSIwIDAgNjQgNDgiIGFyaWEtaGlkZGVuPSJ0cnVlIj48cmVjdCB4PSIxMiIgeT0iMTIiIHdpZHRoPSI0MSIgaGVpZ2h0PSIyOCIgcng9IjIiLz48cGF0aCBkPSJNMTkgMTJWNmgxOHY2TTM5IDE5aDdtLTcgNmg3bS03IDZoN00yNyAxOGwtNiAxMGg3bC00IDhNMTggNDF2NG0yOS00djQiLz48L3N2Zz48ZGl2PjxoMz5Qb3dlciAmIGRld2F0ZXJpbmc8L2gzPjxwPk91dGxpbmUgeW91ciBwcm9qZWN0IHJlcXVpcmVtZW50czwvcD48L2Rpdj48L2FydGljbGU+CjwvZGl2Pgo8L21haW4+Cjxmb290ZXI+PGRpdj48c3Ryb25nPkFMREVSIEVRVUlQTUVOVCDCtyBFbnF1aXJ5IGNvbmNlcHQ8L3N0cm9uZz48YnI+RXF1aXBtZW50IGhpcmUgc2FtcGxlIMK3IENhdGVnb3J5IHNlbGVjdGlvbiBhbmQgcHJvamVjdCBlbnF1aXJ5LjwvZGl2PjxkaXY+V29yZFByZXNzIGV4YW1wbGUgYnkgU2V2ZXJpYW4gUm90aDxicj48YSBocmVmPSJodHRwczovL3NldmVyaWFucm90aC5naXRodWIuaW8vc2VydmljZS1zaXRlLWV4YW1wbGVzLyI+VmlldyBhbGwgdGhyZWUgZXhhbXBsZXM8L2E+PC9kaXY+PC9mb290ZXI+CjwvZGl2PjwhLS0gL3dwOmh0bWwgLS0+'))); update_option('show_on_front','page'); update_option('page_on_front',$id); update_option('blogname',\"Alder Equipment Hire\"); update_option('blog_public',0); update_option('blogdescription','WordPress sample by Severian Roth');"
+    }
+  ]
+}

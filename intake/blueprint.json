@@ -1,0 +1,63 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "7.1"
+  },
+  "landingPage": "/",
+  "login": true,
+  "steps": [
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "url",
+        "url": "https://downloads.wordpress.org/theme/twentytwentyfive.1.5.zip"
+      },
+      "options": {
+        "activate": false
+      }
+    },
+    {
+      "step": "mkdir",
+      "path": "/wordpress/wp-content/themes/sr-intake/templates"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-intake/style.css",
+      "data": "/*\nTheme Name: Northstar Client Services\nTemplate: twentytwentyfive\nVersion: 1.0.0\nAuthor: Severian Roth\nLicense: GNU General Public License v2 or later\nLicense URI: https://www.gnu.org/licenses/gpl-2.0.html\n*/\n\n*{box-sizing:border-box}:root{color-scheme:light;--paper:#faf6ee;--ink:#2b302c;--muted:#727a70;--line:#daddd2;--orange:#b94e2c;--pale:#f5e5d6;--green:#557157}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 Arial,sans-serif}button,select{font:inherit}header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:25px 38px;border-bottom:1px solid var(--line)}.brand{font-size:17px;font-weight:800;letter-spacing:1.5px}.brand b{color:var(--orange)}.badge{font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:30px;padding:7px 12px}main{max-width:1100px;padding:36px 38px 25px;margin:auto}.eyebrow{font-size:10px;letter-spacing:2px;font-weight:bold;color:var(--orange)}h1{font-family:Georgia,serif;font-weight:400;font-size:46px;letter-spacing:-1.2px;line-height:1.1;margin:13px 0 15px;max-width:730px}.intro{color:var(--muted);font-size:13px;max-width:670px;line-height:1.7;margin:0 0 28px}.workspace{display:grid;grid-template-columns:1.04fr 1fr;gap:25px}.form,.result{border:1px solid var(--line);border-radius:13px;padding:23px}.form{background:#fffdf8}.result{background:#eef1e8}.step{display:inline-block;background:var(--pale);color:var(--orange);border-radius:4px;padding:3px 7px;font-size:9px;font-weight:700;letter-spacing:1px}h2{font-size:20px;margin:10px 0 17px;line-height:1.3}.label{display:block;font-size:11px;font-weight:bold;margin:16px 0 7px}.field,select{border:1px solid #cfd4c6;border-radius:7px;width:100%;padding:11px 12px;background:white;color:var(--ink);font-size:12px}.field{color:var(--muted)}.form-note{font-size:10px;color:var(--muted);margin:14px 0 0}.tags{display:flex;flex-wrap:wrap;gap:7px;margin:17px 0}.tag{font-size:10px;padding:6px 9px;border-radius:20px;background:white;border:1px solid #cad4c4}.status{display:flex;align-items:flex-start;gap:11px;padding:14px 0;border-top:1px solid #d1d8c8}.status .dot{width:8px;height:8px;flex:0 0 8px;background:var(--green);border-radius:50%;margin-top:5px}.status strong{font-size:12px;display:block}.status p{font-size:11px;color:var(--muted);margin:3px 0 0}.status.sample .dot{background:var(--orange)}button{cursor:pointer}.action{width:100%;border:0;background:var(--ink);color:white;border-radius:7px;padding:11px 13px;font-size:12px;margin-top:15px}.action:disabled{background:#576753;cursor:default}#notice{font-size:10px;line-height:1.7;color:var(--muted);margin-top:10px;min-height:33px}.limits{margin-top:23px;padding-top:17px;border-top:1px solid var(--line);font-size:10px;line-height:1.8;color:var(--muted)}footer{display:flex;justify-content:space-between;gap:14px;margin-top:20px;color:var(--muted);font-size:9px}\n@media(max-width:700px){header{padding:21px}.brand{font-size:13px}.badge{font-size:9px;padding:5px 9px}main{padding:29px 21px 24px}h1{font-size:38px}.workspace{grid-template-columns:1fr;gap:17px}.form,.result{padding:19px}footer{flex-direction:column}}\n@page{size:270mm 254mm;margin:0}@media print{body{print-color-adjust:exact;-webkit-print-color-adjust:exact}main{padding-top:31px}.intro{margin-bottom:24px}.form,.result{padding:21px}}\n.samplebar{padding:8px 5%;background:#e6eade;color:#475b46;display:flex;justify-content:space-between;gap:15px;font:11px Arial}.samplebar a{font-weight:bold;text-decoration:underline;color:inherit}@media(max-width:650px){.samplebar{font-size:9px}}\n.wp-site-blocks{padding:0!important}.wp-block-post-content{margin:0!important}\n"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-intake/functions.php",
+      "data": "<?php\nadd_action('wp_enqueue_scripts', function () { wp_enqueue_style('sr-demo',get_stylesheet_uri(),array(),'1.0.0'); wp_enqueue_script('sr-demo',get_stylesheet_directory_uri().'/app.js',array(),'1.0.0',true); });\nadd_filter('show_admin_bar','__return_false');\n"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-intake/theme.json",
+      "data": "{\"version\": 3, \"settings\": {\"layout\": {\"contentSize\": \"1280px\", \"wideSize\": \"1280px\"}}, \"styles\": {\"spacing\": {\"blockGap\": \"0\", \"padding\": {\"top\": \"0\", \"bottom\": \"0\", \"left\": \"0\", \"right\": \"0\"}}}}"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-intake/app.js",
+      "data": "\nconst practice=document.getElementById('practice'),urgency=document.getElementById('urgency'),booking=document.getElementById('booking');\nfunction update(){document.getElementById('practice-tag').textContent=practice.value;document.getElementById('urgency-tag').textContent=urgency.selectedOptions[0].textContent;document.getElementById('route-title').textContent={soon:'Priority review',later:'Planned support',exploring:'Discovery conversation'}[urgency.value];document.getElementById('sequence-title').textContent='Call invitation ready';document.getElementById('sequence-text').textContent='Sample path: invite to book, then pause reminders when booked.';document.getElementById('notice').textContent='Sample routing rules. Your actual qualification criteria would be agreed first.';booking.disabled=false;booking.textContent='Simulate a confirmed booking'}\npractice.addEventListener('change',update);urgency.addEventListener('change',update);booking.addEventListener('click',()=>{document.getElementById('sequence-title').textContent='Booked: sample sequence stopped';document.getElementById('sequence-text').textContent='This illustrates the intended stop condition after a confirmed booking.';document.getElementById('notice').textContent='Simulation only. No Calendly event was created and no email was sent.';booking.disabled=true;booking.textContent='Booking state simulated'});\n"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-intake/templates/index.html",
+      "data": "<!-- wp:post-content {\"layout\":{\"type\":\"default\"}} /-->"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-intake/templates/front-page.html",
+      "data": "<!-- wp:post-content {\"layout\":{\"type\":\"default\"}} /-->"
+    },
+    {
+      "step": "activateTheme",
+      "themeFolderName": "sr-intake"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; wp_set_current_user(1); remove_filter('content_save_pre','wp_filter_post_kses'); $id=wp_insert_post(array('post_type'=>'page','post_title'=>\"Northstar Client Services\",'post_status'=>'publish','post_content'=>base64_decode('PCEtLSB3cDpodG1sIC0tPjxkaXYgY2xhc3M9InNhbXBsZWJhciI+PHNwYW4+V09SRFBSRVNTIERFTU8gwrcgU2V2ZXJpYW4gUm90aDwvc3Bhbj48YSBocmVmPSJodHRwczovL3BsYXlncm91bmQud29yZHByZXNzLm5ldC8/Ymx1ZXByaW50LXVybD1odHRwcyUzQSUyRiUyRnNldmVyaWFucm90aC5naXRodWIuaW8lMkZzZXJ2aWNlLXNpdGUtZXhhbXBsZXMlMkZpbnRha2UlMkZibHVlcHJpbnQuanNvbiIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIiPk9wZW4gZWRpdGFibGUgV29yZFByZXNzIOKGlzwvYT48L2Rpdj48aGVhZGVyPjxkaXYgY2xhc3M9ImJyYW5kIj48Yj5OT1JUSFNUQVI8L2I+IENMSUVOVCBTRVJWSUNFUzwvZGl2PjxkaXYgY2xhc3M9ImJhZGdlIj5DbGllbnQgaW50YWtlIGV4YW1wbGU8L2Rpdj48L2hlYWRlcj4KPG1haW4+PGRpdiBjbGFzcz0iZXllYnJvdyI+RlJPTSBFTlFVSVJZIFRPIEEgQ0xFQVIgTkVYVCBTVEVQPC9kaXY+PGgxPkEgYmV0dGVyIGhhbmRvZmYgc3RhcnRzPGJyPndpdGggdGhlIGZpcnN0IGNvbnZlcnNhdGlvbi48L2gxPjxwIGNsYXNzPSJpbnRybyI+Q29sbGVjdCB0aGUgcmlnaHQgcHJvamVjdCBkZXRhaWxzLCBnaXZlIHRoZSBlbnF1aXJ5IGEgY2xlYXIgcGxhY2UgaW4gdGhlIHBpcGVsaW5lLCBhbmQgZ3VpZGUgdGhlIG5leHQgc3RlcCB0b3dhcmQgYSBjYWxsLjwvcD4KPHNlY3Rpb24gY2xhc3M9IndvcmtzcGFjZSIgYXJpYS1sYWJlbD0iU2FtcGxlIGludGFrZSBhbmQgcm91dGluZyI+PGRpdiBjbGFzcz0iZm9ybSI+PHNwYW4gY2xhc3M9InN0ZXAiPjAxIC8gQ0xJRU5UIElOVEFLRTwvc3Bhbj48aDI+QSBmZXcgdXNlZnVsIGRldGFpbHMuPC9oMj48c3BhbiBjbGFzcz0ibGFiZWwiPkJ1c2luZXNzPC9zcGFuPjxkaXYgY2xhc3M9ImZpZWxkIj5FeGFtcGxlIGJ1c2luZXNzPC9kaXY+PGxhYmVsIGNsYXNzPSJsYWJlbCIgZm9yPSJwcmFjdGljZSI+U2VydmljZSBhcmVhPC9sYWJlbD48c2VsZWN0IGlkPSJwcmFjdGljZSI+PG9wdGlvbj5Qcm9qZWN0IHN1cHBvcnQ8L29wdGlvbj48b3B0aW9uPk9wZXJhdGlvbnMgcGxhbm5pbmc8L29wdGlvbj48b3B0aW9uPkJ1c2luZXNzIGFkdmlzb3J5PC9vcHRpb24+PC9zZWxlY3Q+PGxhYmVsIGNsYXNzPSJsYWJlbCIgZm9yPSJ1cmdlbmN5Ij5XaGVuIHdvdWxkIHN1cHBvcnQgYmUgdXNlZnVsPzwvbGFiZWw+PHNlbGVjdCBpZD0idXJnZW5jeSI+PG9wdGlvbiB2YWx1ZT0ic29vbiI+VGhpcyB3ZWVrPC9vcHRpb24+PG9wdGlvbiB2YWx1ZT0ibGF0ZXIiPldpdGhpbiB0aGUgbmV4dCBtb250aDwvb3B0aW9uPjxvcHRpb24gdmFsdWU9ImV4cGxvcmluZyI+RXhwbG9yaW5nIG9wdGlvbnM8L29wdGlvbj48L3NlbGVjdD48cCBjbGFzcz0iZm9ybS1ub3RlIj5QcmV2aWV3IGNvbnRyb2xzIG9ubHkuIE5vIHBlcnNvbmFsIG9yIGNhc2UgZGV0YWlscyBhcmUgY29sbGVjdGVkLjwvcD48L2Rpdj4KPGFzaWRlIGNsYXNzPSJyZXN1bHQiPjxzcGFuIGNsYXNzPSJzdGVwIj4wMiAvIFJPVVRJTkcgUFJFVklFVzwvc3Bhbj48aDIgaWQ9InJvdXRlLXRpdGxlIj5Qcmlvcml0eSByZXZpZXc8L2gyPjxkaXYgY2xhc3M9InRhZ3MiPjxzcGFuIGNsYXNzPSJ0YWciIGlkPSJwcmFjdGljZS10YWciPlByb2plY3Qgc3VwcG9ydDwvc3Bhbj48c3BhbiBjbGFzcz0idGFnIiBpZD0idXJnZW5jeS10YWciPlRoaXMgd2Vlazwvc3Bhbj48L2Rpdj48ZGl2IGNsYXNzPSJzdGF0dXMiPjxzcGFuIGNsYXNzPSJkb3QiPjwvc3Bhbj48ZGl2PjxzdHJvbmc+RW5xdWlyeSBhY2tub3dsZWRnZWQ8L3N0cm9uZz48cD5FeGFtcGxlIGNvbmZpcm1hdGlvbiBhbmQgbmV4dC1zdGVwIGd1aWRhbmNlLjwvcD48L2Rpdj48L2Rpdj48ZGl2IGNsYXNzPSJzdGF0dXMgc2FtcGxlIj48c3BhbiBjbGFzcz0iZG90Ij48L3NwYW4+PGRpdj48c3Ryb25nIGlkPSJzZXF1ZW5jZS10aXRsZSI+Q2FsbCBpbnZpdGF0aW9uIHJlYWR5PC9zdHJvbmc+PHAgaWQ9InNlcXVlbmNlLXRleHQiPlNhbXBsZSBwYXRoOiBpbnZpdGUgdG8gYm9vaywgdGhlbiBwYXVzZSByZW1pbmRlcnMgd2hlbiBib29rZWQuPC9wPjwvZGl2PjwvZGl2PjxidXR0b24gY2xhc3M9ImFjdGlvbiIgaWQ9ImJvb2tpbmciPlNpbXVsYXRlIGEgY29uZmlybWVkIGJvb2tpbmc8L2J1dHRvbj48cCBpZD0ibm90aWNlIiBhcmlhLWxpdmU9InBvbGl0ZSI+U2FtcGxlIHJvdXRpbmcgcnVsZXMuIFlvdXIgYWN0dWFsIHF1YWxpZmljYXRpb24gY3JpdGVyaWEgd291bGQgYmUgYWdyZWVkIGZpcnN0LjwvcD48L2FzaWRlPjwvc2VjdGlvbj4KPHAgY2xhc3M9ImxpbWl0cyI+SW50ZXJhY3RpdmUgV29yZFByZXNzIHNhbXBsZSDCtyBSb3V0aW5nIGFuZCBib29raW5nIHN0YXRlcyB1c2UgZXhhbXBsZSBkYXRhLjwvcD48Zm9vdGVyPjxzcGFuPk5vcnRoc3RhciBDbGllbnQgU2VydmljZXMgwrcgUG9ydGZvbGlvIGV4YW1wbGU8L3NwYW4+PHNwYW4+U2V2ZXJpYW4gUm90aCAvIFdvcmRQcmVzcyBleGFtcGxlPC9zcGFuPjwvZm9vdGVyPjwvbWFpbj48IS0tIC93cDpodG1sIC0tPg=='))); update_option('show_on_front','page'); update_option('page_on_front',$id); update_option('blogname',\"Northstar Client Services\"); update_option('blog_public',0); update_option('blogdescription','WordPress sample by Severian Roth');"
+    }
+  ]
+}

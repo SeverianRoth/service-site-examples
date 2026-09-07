@@ -1,0 +1,2 @@
+
+document.querySelector('#enquiry').addEventListener('submit',event=>{event.preventDefault();const category=document.querySelector('#category').value;const location=document.querySelector('#location').value.trim();const duration=document.querySelector('#duration').value;const start=document.querySelector('#start').value;document.querySelector('#notice').textContent=`Preview: ${category} · ${location} · ${start} · ${duration}. Nothing sent or reserved.`;});
