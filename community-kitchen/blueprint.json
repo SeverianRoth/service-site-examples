@@ -1,0 +1,63 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "7.1"
+  },
+  "landingPage": "/",
+  "login": true,
+  "steps": [
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "url",
+        "url": "https://downloads.wordpress.org/theme/twentytwentyfive.1.5.zip"
+      },
+      "options": {
+        "activate": false
+      }
+    },
+    {
+      "step": "mkdir",
+      "path": "/wordpress/wp-content/themes/sr-community-kitchen/templates"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-community-kitchen/style.css",
+      "data": "/*\nTheme Name: Open Table Community Kitchen\nTemplate: twentytwentyfive\nVersion: 1.0.0\nAuthor: Severian Roth\nLicense: GNU General Public License v2 or later\nLicense URI: https://www.gnu.org/licenses/gpl-2.0.html\n*/\n\n*{box-sizing:border-box}:root{color-scheme:light;--paper:#faf6ee;--ink:#2b302c;--muted:#727a70;--line:#daddd2;--orange:#b94e2c;--pale:#f5e5d6;--green:#557157}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 Arial,sans-serif}button,select{font:inherit}header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:25px 38px;border-bottom:1px solid var(--line)}.brand{font-size:17px;font-weight:800;letter-spacing:1.5px}.brand b{color:var(--orange)}.badge{font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:30px;padding:7px 12px}main{max-width:1100px;padding:36px 38px 25px;margin:auto}.eyebrow{font-size:10px;letter-spacing:2px;font-weight:bold;color:var(--orange)}h1{font-family:Georgia,serif;font-weight:400;font-size:46px;letter-spacing:-1.2px;line-height:1.1;margin:13px 0 15px;max-width:730px}.intro{color:var(--muted);font-size:13px;max-width:670px;line-height:1.7;margin:0 0 28px}.workspace{display:grid;grid-template-columns:1.04fr 1fr;gap:25px}.form,.result{border:1px solid var(--line);border-radius:13px;padding:23px}.form{background:#fffdf8}.result{background:#eef1e8}.step{display:inline-block;background:var(--pale);color:var(--orange);border-radius:4px;padding:3px 7px;font-size:9px;font-weight:700;letter-spacing:1px}h2{font-size:20px;margin:10px 0 17px;line-height:1.3}.label{display:block;font-size:11px;font-weight:bold;margin:16px 0 7px}.field,select{border:1px solid #cfd4c6;border-radius:7px;width:100%;padding:11px 12px;background:white;color:var(--ink);font-size:12px}.field{color:var(--muted)}.form-note{font-size:10px;color:var(--muted);margin:14px 0 0}.tags{display:flex;flex-wrap:wrap;gap:7px;margin:17px 0}.tag{font-size:10px;padding:6px 9px;border-radius:20px;background:white;border:1px solid #cad4c4}.status{display:flex;align-items:flex-start;gap:11px;padding:14px 0;border-top:1px solid #d1d8c8}.status .dot{width:8px;height:8px;flex:0 0 8px;background:var(--green);border-radius:50%;margin-top:5px}.status strong{font-size:12px;display:block}.status p{font-size:11px;color:var(--muted);margin:3px 0 0}.status.sample .dot{background:var(--orange)}button{cursor:pointer}.action{width:100%;border:0;background:var(--ink);color:white;border-radius:7px;padding:11px 13px;font-size:12px;margin-top:15px}.action:disabled{background:#576753;cursor:default}#notice{font-size:10px;line-height:1.7;color:var(--muted);margin-top:10px;min-height:33px}.limits{margin-top:23px;padding-top:17px;border-top:1px solid var(--line);font-size:10px;line-height:1.8;color:var(--muted)}footer{display:flex;justify-content:space-between;gap:14px;margin-top:20px;color:var(--muted);font-size:9px}\n@media(max-width:700px){header{padding:21px}.brand{font-size:13px}.badge{font-size:9px;padding:5px 9px}main{padding:29px 21px 24px}h1{font-size:38px}.workspace{grid-template-columns:1fr;gap:17px}.form,.result{padding:19px}footer{flex-direction:column}}\n@page{size:270mm 254mm;margin:0}@media print{body{print-color-adjust:exact;-webkit-print-color-adjust:exact}main{padding-top:31px}.intro{margin-bottom:24px}.form,.result{padding:21px}}\n.samplebar{padding:8px 5%;background:#e6eade;color:#475b46;display:flex;justify-content:space-between;gap:15px;font:11px Arial}.samplebar a{font-weight:bold;text-decoration:underline;color:inherit}@media(max-width:650px){.samplebar{font-size:9px}}\n.hero-art{float:right;width:190px;height:130px;margin:0 0 15px 25px}.more{padding:25px 0 0;border-top:1px solid var(--line);margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:25px}.more h3{font-size:15px}.more p{font-size:12px;color:var(--muted)}.more a{color:var(--orange)}@media(max-width:700px){.hero-art{width:100px;height:85px}.more{grid-template-columns:1fr;gap:5px}}\n.wp-site-blocks{padding:0!important}.wp-block-post-content{margin:0!important}\n"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-community-kitchen/functions.php",
+      "data": "<?php\nadd_action('wp_enqueue_scripts', function () { wp_enqueue_style('sr-demo',get_stylesheet_uri(),array(),'1.0.0'); wp_enqueue_script('sr-demo',get_stylesheet_directory_uri().'/app.js',array(),'1.0.0',true); });\nadd_filter('show_admin_bar','__return_false');\n"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-community-kitchen/theme.json",
+      "data": "{\"version\": 3, \"settings\": {\"layout\": {\"contentSize\": \"1280px\", \"wideSize\": \"1280px\"}}, \"styles\": {\"spacing\": {\"blockGap\": \"0\", \"padding\": {\"top\": \"0\", \"bottom\": \"0\", \"left\": \"0\", \"right\": \"0\"}}}}"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-community-kitchen/app.js",
+      "data": "\nconst role=document.getElementById('role'),availability=document.getElementById('availability');\nfunction update(){\n document.getElementById('role-tag').textContent=role.value;\n document.getElementById('time-tag').textContent=availability.selectedOptions[0].textContent;\n document.getElementById('route-title').textContent={'Kitchen preparation':'Join the kitchen team','Food collection':'Keep the pantry stocked','Welcoming guests':'Make everyone feel welcome'}[role.value];\n document.getElementById('notice').textContent='';\n}\nrole.addEventListener('change',update);availability.addEventListener('change',update);\ndocument.getElementById('preview-volunteer').addEventListener('click',()=>{\n document.getElementById('notice').textContent='Hello Open Table team, I would like to help with '+role.value.toLowerCase()+'. I can join '+availability.selectedOptions[0].textContent.toLowerCase()+'. Please tell me about the next introduction session.';\n});\n"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-community-kitchen/templates/index.html",
+      "data": "<!-- wp:post-content {\"layout\":{\"type\":\"default\"}} /-->"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/themes/sr-community-kitchen/templates/front-page.html",
+      "data": "<!-- wp:post-content {\"layout\":{\"type\":\"default\"}} /-->"
+    },
+    {
+      "step": "activateTheme",
+      "themeFolderName": "sr-community-kitchen"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; wp_set_current_user(1); remove_filter('content_save_pre','wp_filter_post_kses'); $id=wp_insert_post(array('post_type'=>'page','post_title'=>\"Open Table Community Kitchen\",'post_status'=>'publish','post_content'=>base64_decode('PCEtLSB3cDpodG1sIC0tPjxkaXYgY2xhc3M9InNhbXBsZWJhciI+PHNwYW4+V09SRFBSRVNTIERFTU8gwrcgU2V2ZXJpYW4gUm90aDwvc3Bhbj48YSBocmVmPSJodHRwczovL3BsYXlncm91bmQud29yZHByZXNzLm5ldC8/Ymx1ZXByaW50LXVybD1odHRwcyUzQSUyRiUyRnNldmVyaWFucm90aC5naXRodWIuaW8lMkZzZXJ2aWNlLXNpdGUtZXhhbXBsZXMlMkZjb21tdW5pdHkta2l0Y2hlbiUyRmJsdWVwcmludC5qc29uIiB0YXJnZXQ9Il9ibGFuayIgcmVsPSJub29wZW5lciI+T3BlbiBlZGl0YWJsZSBXb3JkUHJlc3Mg4oaXPC9hPjwvZGl2Pgo8aGVhZGVyPjxkaXYgY2xhc3M9ImJyYW5kIj48Yj5PUEVOIFRBQkxFPC9iPiBDT01NVU5JVFkgS0lUQ0hFTjwvZGl2PjxkaXYgY2xhc3M9ImJhZGdlIj5Ob25wcm9maXQgd2Vic2l0ZSBleGFtcGxlPC9kaXY+PC9oZWFkZXI+CjxtYWluPjxzdmcgY2xhc3M9Imhlcm8tYXJ0IiB2aWV3Qm94PSIwIDAgMjAwIDE1MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJJbGx1c3RyYXRpb24gb2YgYSBib3dsIG9mIGZyZXNoIGZvb2QiPjxlbGxpcHNlIGN4PSIxMDAiIGN5PSIxMzEiIHJ4PSI4MCIgcnk9IjEyIiBmaWxsPSIjZTZkY2NiIi8+PHBhdGggZD0iTTI1IDY0SDE3NVExNjYgMTI5IDEwMCAxMzFRMzQgMTI5IDI1IDY0IiBmaWxsPSIjYmE2NTQ4Ii8+PGVsbGlwc2UgY3g9IjEwMCIgY3k9IjY0IiByeD0iNzUiIHJ5PSIyMyIgZmlsbD0iI2VlZGFjMSIvPjxwYXRoIGQ9Ik01NSA3MFEyNiAyNCA2NSAxM1E3NyAzMyA2OCA1OFExMDUgMTYgMTIzIDMwUTEzOSA0OSAxMDcgNjNRMTQ2IDE5IDE2NyA0N1ExNTMgNzMgNTUgNzAiIGZpbGw9IiM2ODhlNTgiLz48Y2lyY2xlIGN4PSI2MyIgY3k9IjY3IiByPSIxNyIgZmlsbD0iI2RjOTU0OCIvPjxjaXJjbGUgY3g9IjExMiIgY3k9IjYzIiByPSIxNSIgZmlsbD0iI2I5NTIzNiIvPjxjaXJjbGUgY3g9IjE0MyIgY3k9IjYzIiByPSIxMCIgZmlsbD0iI2VlZDA3OCIvPjwvc3ZnPjxkaXYgY2xhc3M9ImV5ZWJyb3ciPkdPT0QgRk9PRC4gQU4gT1BFTiBET09SLjwvZGl2PjxoMT5BIHBsYWNlIGF0IHRoZSB0YWJsZS48YnI+QSB3YXkgdG8gZ2l2ZSBiYWNrLjwvaDE+PHAgY2xhc3M9ImludHJvIj5BIHdlbGNvbWluZyBjb21tdW5pdHkga2l0Y2hlbiBzdGFydHMgd2l0aCBwZW9wbGUgd2hvIGNhcmUuIERpc2NvdmVyIGEgdm9sdW50ZWVyIHJvbGUgdGhhdCBmaXRzIHlvdXIgaW50ZXJlc3RzIGFuZCB0aGUgdGltZSB5b3UgY2FuIHNoYXJlLjwvcD4KPHNlY3Rpb24gY2xhc3M9IndvcmtzcGFjZSIgYXJpYS1sYWJlbD0iVm9sdW50ZWVyIHNpZ24tdXAgZXhhbXBsZSI+PGRpdiBjbGFzcz0iZm9ybSI+PHNwYW4gY2xhc3M9InN0ZXAiPjAxIC8gRklORCBZT1VSIFJPTEU8L3NwYW4+PGgyPldoYXQgd291bGQgeW91IGVuam95PzwvaDI+PGxhYmVsIGNsYXNzPSJsYWJlbCIgZm9yPSJyb2xlIj5JIHdvdWxkIGxpa2UgdG8gaGVscCB3aXRoPC9sYWJlbD48c2VsZWN0IGlkPSJyb2xlIj48b3B0aW9uPktpdGNoZW4gcHJlcGFyYXRpb248L29wdGlvbj48b3B0aW9uPkZvb2QgY29sbGVjdGlvbjwvb3B0aW9uPjxvcHRpb24+V2VsY29taW5nIGd1ZXN0czwvb3B0aW9uPjwvc2VsZWN0PjxsYWJlbCBjbGFzcz0ibGFiZWwiIGZvcj0iYXZhaWxhYmlsaXR5Ij5JIGNhbiBqb2luPC9sYWJlbD48c2VsZWN0IGlkPSJhdmFpbGFiaWxpdHkiPjxvcHRpb24gdmFsdWU9IndlZWtseSI+QSByZWd1bGFyIHdlZWtseSBzZXNzaW9uPC9vcHRpb24+PG9wdGlvbiB2YWx1ZT0ibW9udGhseSI+T25lIHNlc3Npb24gZWFjaCBtb250aDwvb3B0aW9uPjxvcHRpb24gdmFsdWU9Im9uY2UiPkEgb25lLW9mZiBldmVudDwvb3B0aW9uPjwvc2VsZWN0PjxwIGNsYXNzPSJmb3JtLW5vdGUiPlRyeSB0aGUgdm9sdW50ZWVyIGpvdXJuZXkgd2l0aCBleGFtcGxlIGNob2ljZXMuPC9wPjwvZGl2Pgo8YXNpZGUgY2xhc3M9InJlc3VsdCI+PHNwYW4gY2xhc3M9InN0ZXAiPjAyIC8gWU9VUiBORVhUIFNURVA8L3NwYW4+PGgyIGlkPSJyb3V0ZS10aXRsZSI+Sm9pbiB0aGUga2l0Y2hlbiB0ZWFtPC9oMj48ZGl2IGNsYXNzPSJ0YWdzIj48c3BhbiBjbGFzcz0idGFnIiBpZD0icm9sZS10YWciPktpdGNoZW4gcHJlcGFyYXRpb248L3NwYW4+PHNwYW4gY2xhc3M9InRhZyIgaWQ9InRpbWUtdGFnIj5BIHJlZ3VsYXIgd2Vla2x5IHNlc3Npb248L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0ic3RhdHVzIj48c3BhbiBjbGFzcz0iZG90Ij48L3NwYW4+PGRpdj48c3Ryb25nPlN0YXJ0IHdpdGggYSB3YXJtIHdlbGNvbWU8L3N0cm9uZz48cD5NZWV0IHRoZSB0ZWFtIGFuZCBsZWFybiBob3cgZWFjaCBraXRjaGVuIHNlc3Npb24gd29ya3MuPC9wPjwvZGl2PjwvZGl2PjxkaXYgY2xhc3M9InN0YXR1cyBzYW1wbGUiPjxzcGFuIGNsYXNzPSJkb3QiPjwvc3Bhbj48ZGl2PjxzdHJvbmcgaWQ9InNlcXVlbmNlLXRpdGxlIj5Zb3VyIGludHJvZHVjdGlvbiBpcyByZWFkeTwvc3Ryb25nPjxwIGlkPSJzZXF1ZW5jZS10ZXh0Ij5DaG9vc2UgYSByb2xlIGFuZCBzZWUgYSBzaW1wbGUgaW50cm9kdWN0aW9uIGZvciB0aGUgdm9sdW50ZWVyIGNvb3JkaW5hdG9yLjwvcD48L2Rpdj48L2Rpdj48YnV0dG9uIGNsYXNzPSJhY3Rpb24iIGlkPSJwcmV2aWV3LXZvbHVudGVlciI+UHJldmlldyBteSBpbnRyb2R1Y3Rpb248L2J1dHRvbj48cCBpZD0ibm90aWNlIiBhcmlhLWxpdmU9InBvbGl0ZSI+PC9wPjwvYXNpZGU+PC9zZWN0aW9uPgo8c2VjdGlvbiBjbGFzcz0ibW9yZSI+PGRpdj48aDM+U2hhcmUgYSBtZWFsPC9oMz48cD5BIHdlbGNvbWluZyBzcGFjZSBmb3IgbmVpZ2hib3VycyB0byBtZWV0IG92ZXIgZnJlc2hseSBwcmVwYXJlZCBmb29kLjwvcD48L2Rpdj48ZGl2PjxoMz5HaXZlIHlvdXIgdGltZTwvaDM+PHA+S2l0Y2hlbiwgY29sbGVjdGlvbiBhbmQgd2VsY29tZSByb2xlcyBtYWtlIGl0IGVhc3kgdG8gY29udHJpYnV0ZS48L3A+PC9kaXY+PGRpdj48aDM+U3VwcG9ydCB0aGUga2l0Y2hlbjwvaDM+PHA+QSBjbGVhciBwbGFjZSBmb3IgZm9vZCBkb25hdGlvbnMsIHBhcnRuZXIgc3VwcG9ydCBhbmQgY29tbXVuaXR5IGV2ZW50cy48L3A+PC9kaXY+PC9zZWN0aW9uPgo8Zm9vdGVyPjxzcGFuPk9wZW4gVGFibGUgaXMgYSBmaWN0aW9uYWwgbm9ucHJvZml0IHBvcnRmb2xpbyBleGFtcGxlLjwvc3Bhbj48c3Bhbj5TZXZlcmlhbiBSb3RoIMK3IDxhIGhyZWY9Imh0dHBzOi8vc2V2ZXJpYW5yb3RoLmdpdGh1Yi5pby9zZXJ2aWNlLXNpdGUtZXhhbXBsZXMvIj5Nb3JlIFdvcmRQcmVzcyB3b3JrPC9hPjwvc3Bhbj48L2Zvb3Rlcj48L21haW4+CjwhLS0gL3dwOmh0bWwgLS0+'))); update_option('show_on_front','page'); update_option('page_on_front',$id); update_option('blogname',\"Open Table Community Kitchen\"); update_option('blog_public',0); update_option('blogdescription','WordPress sample by Severian Roth');"
+    }
+  ]
+}
