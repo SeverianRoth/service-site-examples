@@ -1,0 +1,70 @@
+{
+  "verifiedAt": "2026-09-08T02:23:32.897621+00:00",
+  "nodeRuntime": "v22.14.0",
+  "nodeOpenSSL": "3.0.15+quic",
+  "nodeTests": {
+    "passed": 8,
+    "failed": 0
+  },
+  "browser": "153.0.8010.28",
+  "browserChecks": {
+    "passed": 8,
+    "total": 8,
+    "cases": [
+      {
+        "name": "Original request",
+        "detail": "Exact signed bytes verify",
+        "pass": true
+      },
+      {
+        "name": "Added JSON whitespace",
+        "detail": "Same JSON value, changed bytes: rejected",
+        "pass": true
+      },
+      {
+        "name": "Changed request body",
+        "detail": "Altered content: rejected",
+        "pass": true
+      },
+      {
+        "name": "Changed endpoint path",
+        "detail": "Path mismatch: rejected",
+        "pass": true
+      },
+      {
+        "name": "Milliseconds instead of seconds",
+        "detail": "Timestamp mismatch: rejected",
+        "pass": true
+      },
+      {
+        "name": "Accidental double hashing",
+        "detail": "Pre-hashed payload: rejected",
+        "pass": true
+      },
+      {
+        "name": "Different public key",
+        "detail": "Key-pair mismatch: rejected",
+        "pass": true
+      },
+      {
+        "name": "Node.js → browser verification",
+        "detail": "Independent backend signature: verified",
+        "pass": true
+      }
+    ]
+  },
+  "responsiveWidths": [
+    360,
+    390,
+    834,
+    1440
+  ],
+  "unicodeInput": "passed",
+  "invalidJsonRecovery": "passed",
+  "pageErrors": [],
+  "independentOpenSSL": "OpenSSL 3.0.13 30 Jan 2024 (Library: OpenSSL 3.0.13 30 Jan 2024)",
+  "independentOriginalSignature": "Verified OK",
+  "independentTamperedPayload": "rejected",
+  "realApiRequests": 0,
+  "privateKeysPersisted": false
+}

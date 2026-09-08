@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>RSA request signing — Severian Roth</title>
+  <meta name="description" content="Interactive backend work sample: exact request bytes, RSA signatures and cross-runtime verification.">
+  <link rel="stylesheet" href="style.css"><script type="module" src="app.mjs"></script>
+</head>
+<body>
+<div class="shell">
+  <header><a class="identity" href="../">SR <span>Severian Roth / Development</span></a><a href="request-signing-source.zip" download>Download source ↗</a></header>
+  <main>
+    <div class="intro"><p class="eyebrow">BACKEND WORK SAMPLE · 01</p><h1>The request is right.<br><em>Are the signed bytes?</em></h1><p class="lede">A small RSA workbench for finding the difference between the request you sign and the request you send.</p></div>
+    <div class="summary"><span class="dot"></span><span id="summary" role="status" aria-live="polite">Ready to run local signing checks</span><span class="runtime">RSA-2048 / SHA-256 / PKCS#1 v1.5</span></div>
+    <div class="workspace">
+      <section class="panel request"><div class="panel-title"><h2><span>01</span> Request bytes</h2><span class="tag">LOCAL SAMPLE</span></div>
+        <label for="body">JSON body <small>UTF-8 · exact text</small></label><textarea id="body" spellcheck="false" rows="4" maxlength="4096">{"msg":"hello"}</textarea>
+        <div class="fields"><div><label for="path">Request path</label><input id="path" value="/oauth2/test_sign" maxlength="200" spellcheck="false"></div><div><label for="timestamp">Timestamp <small>seconds</small></label><input id="timestamp" value="1788825600" inputmode="numeric" maxlength="10"></div></div>
+        <div class="assembly"><span>BODY</span><b>+</b><span>PATH</span><b>+</b><span>TIMESTAMP</span></div>
+        <label for="payload">Bytes passed to the signer</label><pre id="payload">Run the checks to inspect the payload.</pre>
+        <button id="run" type="button">Run signing checks <span>↗</span></button>
+        <p class="caption">A temporary key is created in this browser. Requests and keys stay here; this sample makes no API calls.</p>
+      </section>
+      <section class="panel"><div class="panel-title"><h2><span>02</span> Verification results</h2><span id="count" class="tag">— / 8</span></div><ol id="results" aria-live="polite"><li class="placeholder">Run the checks to see which changes invalidate the signature.</li></ol><div class="takeaway"><span>WHY IT MATTERS</span><p>Serialize once. Sign those bytes. Send those same bytes.</p><small>Equivalent JSON can still produce a different signature.</small></div></section>
+    </div>
+    <section class="notes"><div><p class="eyebrow">FROM SAMPLE TO STORE</p><h2>Authentication first.<br>Order recovery next.</h2></div><div><p>The first store milestone is a verified signature test and confirmed outbound IP. Paid-order handling then uses WooCommerce’s order lifecycle and Action Scheduler, with ambiguous responses reconciled before another recharge attempt.</p><p class="caption">This sample demonstrates local cryptographic verification. The store’s supplied API documentation defines its integration and acceptance tests.</p><a href="README.md">Source and verification notes ↗</a></div></section>
+  </main><footer><span>Built by Severian Roth</span><a href="mailto:SeverianRoth@proton.me">Discuss an integration ↗</a></footer>
+</div>
+</body></html>

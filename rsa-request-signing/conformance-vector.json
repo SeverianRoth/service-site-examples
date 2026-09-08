@@ -1,0 +1,9 @@
+{
+  "body": "{\"msg\":\"hello — ceramic\"}",
+  "path": "/oauth2/test_sign",
+  "timestamp": "1788825600",
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuozN2yx6I4k55EYSC9ON\nljIwIEOCGH6pG6Fuc2dvlvVrGVTO/iqGi+N2lFAEMjhge6H8hQJE73JIaN9DRO/N\n+6MytYe1oxKI2YML4Iur3dqiWeiot10kOyK2tGvbLbfcjW4bNe62walaQPScU1ns\na1EJKHF0wZRI4msVm/Tme+FRwUMHvWkjTdEyRLOh2yCQtmnoUE9O79ph9tuoxf3i\nk53bIb/fUfGB2j6dxudkIwmZQwH+B2Ay/OlGxdacVETS05V5Ytcccd1TPJ+vamNQ\nvV+UFzKLbBszszESlN+bUM0DL76xfv/Sz7/uZEEYZuREY4Vnc1skfwIRyM2hEJkC\nkQIDAQAB\n-----END PUBLIC KEY-----\n",
+  "signature": "CIyR9yZWVidO1Mcin64WpBbqw8gWNNbkVCJw7izNe6z0XiUPaLwokD5rhWf2oro7uudzaM8moWQN8Dnivj6W7StoW08/cCOjKlXX1hNKgZUOnCGtJ0N86vMlihxwPtrxUJdQtkwwbMLEuAw7XrZEOIsJfH0ZAHmMy3uhCC9+jxvi+k7Qc+E5UqrkbjySfo1N3NIWb8FmBWdg2pcq9uAQVSF1eIEV5J3UQmQ08YV1w0AnBiAEuHhFuImSF2u2BbzDhVv6w8Rvg+A3o5gWM0TGEnsH1D3H7Y1GimlNduZGANe9N5G85buhNX014dZBW+BYcSNmJ7YnjMQhv7zVP5PClw==",
+  "runtime": "v22.14.0",
+  "openssl": "3.0.15+quic"
+}
