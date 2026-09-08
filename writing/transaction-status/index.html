@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>A transaction hash is not a payment receipt — Severian Roth</title>
+  <meta name="description" content="A short Ethereum explainer separates a signed transaction, a broadcast response, an execution receipt, and finality.">
+  <link rel="icon" href="data:,"><link rel="stylesheet" href="../json-signatures/style.css">
+  <style>td:last-child{white-space:normal}th:first-child{width:31%}</style>
+</head>
+<body>
+  <header class="masthead"><a href="../../">SEVERIAN ROTH</a><span>Engineering notes / 03</span></header>
+  <main class="article">
+    <article>
+      <p class="kicker">Ethereum · Transaction evidence</p>
+      <h1>A transaction hash<br>is not a payment receipt.</h1>
+      <p class="deck">The wallet has a hash. The recipient has no payment. Both observations can be true.</p>
+      <div class="byline">Severian Roth · <time datetime="2026-09-09">9 September 2026</time></div>
+      <p>Imagine a payment screen that displays a transaction hash and then loses its connection. It is tempting to show either “Paid” or “Failed.” The first label assumes too much about the network. The second assumes too much about the connection failure.</p>
+      <p>The useful question is narrower: what evidence did the application actually receive? Ethereum exposes several stages, and each supports a different statement.</p>
+
+      <h2>A hash identifies an attempt</h2>
+      <p>Signing authorizes a particular transaction. Broadcasting sends it to a node for propagation. Inclusion places it in a block. These are separate steps in Ethereum’s <a href="https://ethereum.org/developers/docs/transactions/#transaction-lifecycle">transaction lifecycle</a>. A hash can identify a signed transaction before there is any block containing it.</p>
+      <p>That distinction matters even when the wallet successfully receives a response from its RPC provider, the service through which it talks to a node. A submission response is useful tracking evidence. It is not a statement that the requested transfer has executed.</p>
+
+      <h2>Ask for the execution receipt</h2>
+      <p>The <a href="https://ethereum.org/developers/docs/apis/json-rpc/#eth_gettransactionreceipt">eth_getTransactionReceipt method</a> returns a receipt when one is available, or <code>null</code> when none is found. Pending transactions do not yet have receipts. A null result therefore does not establish that the payment failed.</p>
+      <p>A receipt adds the block number, block hash and execution status. <a href="https://eips.ethereum.org/EIPS/eip-658">EIP-658</a> defines that status for transactions after the Byzantium upgrade: zero means the top-level execution failed; one means it succeeded. In JSON-RPC responses those values appear as <code>0x0</code> and <code>0x1</code>.</p>
+      <p>“Included” and “succeeded” answer different questions. A failed execution can still be recorded in a block. The presence of a receipt alone is insufficient evidence for a green payment badge.</p>
+
+      <table>
+        <caption>Evidence available to the application</caption>
+        <thead><tr><th scope="col">Observation</th><th scope="col">What it establishes</th></tr></thead>
+        <tbody>
+          <tr><td>Transaction hash</td><td>An identifier to investigate; inclusion is unconfirmed.</td></tr>
+          <tr><td>Receipt is null</td><td>This endpoint returned no receipt.</td></tr>
+          <tr><td>Receipt status 0x0</td><td>Execution failed in the reported block.</td></tr>
+          <tr><td>Receipt status 0x1</td><td>Top-level execution succeeded in the reported block.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Execution success still needs interpretation</h2>
+      <p>The status bit does not describe the customer’s intention. A contract call may complete successfully while doing something other than the transfer the interface meant to request. The <a href="https://eips.ethereum.org/EIPS/eip-20#methods">ERC-20 standard</a>, for example, requires callers to handle a false return value from token methods rather than assuming every call succeeds.</p>
+      <p>A payment system therefore needs a check specific to the action: the correct network, intended asset, recipient and amount, supported by the relevant transaction data and contract events or state. “The call did not revert” and “this invoice was paid” are different claims.</p>
+
+      <h2>Finality is another question</h2>
+      <p>Even a successful receipt describes inclusion in a particular block. Ethereum’s <a href="https://ethereum.org/developers/docs/consensus-mechanisms/pos/#finality">consensus finality</a> provides a stronger commitment to that history. An application should say which stage it requires before treating a payment as settled.</p>
+      <p>This is about Ethereum’s base layer. A rollup’s sequencing, settlement and withdrawal stages need their own explanation; borrowing the word “confirmed” does not make their guarantees identical.</p>
+
+      <h2>Keep a connection error separate</h2>
+      <p>Return to the frozen screen. A timeout describes the application’s ability to obtain a response. It does not report the transaction’s execution status. My design recommendation is to preserve the attempt’s network and hash, show that the outcome is still being checked, and reconcile that attempt before offering a fresh payment.</p>
+      <p>The wording is part of the behavior. A button labelled “Try again” can invite another payment; “Check this transaction” asks for evidence about the existing one. The system should know which action it is performing before asking the user to click.</p>
+
+      <div class="evidence">
+        <p><strong>Scope:</strong> a source-based technical explanation, checked on 9 September 2026. The opening scenario is hypothetical; no transaction was broadcast or customer incident claimed for this article.</p>
+        <p><strong>Author context:</strong> I develop <a href="https://github.com/SeverianRoth/ARX">ARX</a>, a self-custody wallet. This article explains protocol evidence; it does not evaluate or recommend a wallet or asset.</p>
+      </div>
+    </article>
+    <footer>Original explanation by Severian Roth. Sources are linked beside the relevant claims.</footer>
+  </main>
+</body>
+</html>
