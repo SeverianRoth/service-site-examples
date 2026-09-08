@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Make the graph follow the records — Severian Roth</title>
+  <meta name="description" content="A small React Flow example shows how to derive a relationship diagram from records, preserve identity, and keep selection consistent.">
+  <link rel="icon" href="data:,"><link rel="stylesheet" href="../json-signatures/style.css">
+</head>
+<body>
+  <header class="masthead"><a href="../../">SEVERIAN ROTH</a><span>Engineering notes / 02</span></header>
+  <main class="article">
+    <article>
+      <p class="kicker">React · Relationship diagrams</p>
+      <h1>Make the graph<br>follow the records.</h1>
+      <p class="deck">A property has three meters. Disconnect one, and the diagram should show two. The interesting decision is where that change lives.</p>
+      <div class="byline">Severian Roth · <time datetime="2026-09-08">8 September 2026</time></div>
+
+      <p>I built a small React Flow example that displays a property above its connected utility meters. You can switch properties, inspect a meter, connect a new sample meter, and disconnect the last one. The records are fictional and stay in browser memory.</p>
+      <p>The tempting implementation keeps a list of connected meter IDs, another list of graph nodes, and another list of edges. A disconnect handler then has three places to update. Miss one, and the interface can contradict its own count.</p>
+
+      <figure>
+        <img src="../../property-meters/desktop.png" alt="The tested example shows Riverside House connected to electricity, water and gas meters." style="display:block;width:100%;height:auto;border:1px solid #d2d9c9" loading="eager">
+        <figcaption>The existing interactive example. Property membership determines the displayed connections.</figcaption>
+      </figure>
+
+      <h2>Derive the picture from membership</h2>
+      <p>In this example, each property owns a <code>connectedMeters</code> array. Meter records live separately. A pure <code>graphFor(property, meters)</code> function looks up those IDs and produces the nodes and edges for rendering.</p>
+      <p>Connecting a sample meter adds its record and appends its ID to the selected property's membership. Disconnecting removes a membership entry. Both changes flow through the same graph function. There is no second stored edge list to keep synchronized.</p>
+      <p>This applies React's <a href="https://react.dev/learn/choosing-the-state-structure">guidance on avoiding redundant state</a>: calculate a value from the state already available when you can. Here, the graph is a projection of the records. The viewport and selected node are separate interface concerns.</p>
+
+      <h2>Give identity a stable representation</h2>
+      <p>A node's identity needs to survive changes to the diagram. An array position describes where a record happens to appear; it does not identify the record. The adapter uses <code>property:</code> and <code>meter:</code> prefixes followed by the underlying ID.</p>
+      <p>Those prefixes also separate record types. A property and a meter can both have the source ID <code>same</code> without colliding in the graph: their node IDs become <code>property:same</code> and <code>meter:same</code>. Edge endpoints use those same node IDs.</p>
+      <p>The adapter deduplicates membership IDs before rendering. It returns unresolved references in a separate <code>missing</code> array and draws only meters it can actually find. The current demo does not show that diagnostic in the interface; a connected production application would need to decide how to surface incomplete data. A missing record should never become an invented meter.</p>
+
+      <h2>Resolve selection against the current graph</h2>
+      <p>The details panel stores a selected ID, then looks up the meter in the current graph. It does not store a second copy of the selected meter object:</p>
+      <pre><code>const selected = graph.nodes.find(
+  n =&gt; n.id === selectedId &amp;&amp; n.type === 'meter'
+)?.data;</code></pre>
+      <p>Changing properties clears the selection. Disconnecting also clears it. Looking up the ID within the current graph provides another useful property: the details panel can only resolve a meter that belongs to the displayed view.</p>
+
+      <h2>Choose what the canvas can edit</h2>
+      <p>This is a relationship viewer with explicit connect and disconnect buttons. It sets React Flow's <code>nodesDraggable</code> and <code>nodesConnectable</code> props to <code>false</code>. The library still provides the canvas, handles, edges, zoom controls and click events.</p>
+      <p>For a freeform editor, the library's <a href="https://reactflow.dev/learn/concepts/adding-interactivity">interactivity guide</a> provides change handlers and utilities for applying node and edge changes. That would require a deliberate decision about which gestures alter business relationships and which only alter layout. A dragged line should not accidentally become an authorized database update.</p>
+
+      <h2>Check the relationship, then the interface</h2>
+      <p>The source includes three model tests: linked records with colliding IDs; duplicate and missing references; and stable IDs after relationship changes, including an empty property. Run <code>node --test model.test.mjs</code> from the extracted source directory.</p>
+      <p>In the browser, Riverside House starts with three meters. Connect a sample to reach four, then disconnect to return to three. Switch to Orchard Studio to see its one meter, or to the unassigned property for the empty state. Selecting a meter shows its serial number and reading. These checks exercise the records and the visible result together.</p>
+      <p>There is no persistence or live metering integration here. The example establishes a smaller useful contract: each visible connection can be traced back to a membership entry, and changing that membership produces the next view.</p>
+
+      <div class="evidence">
+        <p><strong>Reproduce the example:</strong> <a href="../../property-meters/">interactive demo</a> · <a href="../../property-meters/source.zip">source and tests</a> · <a href="verification.json">verification record</a>.</p>
+        <p>Existing dependencies: React and React DOM 19.2.8, React Flow 12.11.6, esbuild 0.28.2. Exact versions and MIT license notices are included with the source. The diagram implementation is unchanged for this article.</p>
+      </div>
+    </article>
+    <footer>Original explanation and example by Severian Roth. Fictional records; no customer data.</footer>
+  </main>
+</body>
+</html>

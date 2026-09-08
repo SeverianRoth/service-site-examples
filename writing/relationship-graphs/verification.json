@@ -1,0 +1,27 @@
+{
+  "status": "verified",
+  "scope": "Existing unchanged property-meter implementation and source archive; new original explanatory article. The model tests were rerun; this article layout was checked. The interactive demo retains its previously tested code.",
+  "sourceSha256": "5ca19e8f51a66acb09c20c186495bcb8b5d6392435f8c91fadab9a19b56445fc",
+  "verifiedAt": "2026-09-08T17:51:57.134022+00:00",
+  "modelTests": {
+    "passed": 3,
+    "failed": 0,
+    "runtime": "native Windows Node.js",
+    "source": "Model and existing tests extracted byte-for-byte from the linked source archive."
+  },
+  "articleLayout": {
+    "browser": "153.0.8010.28",
+    "widths": [
+      360,
+      390,
+      834,
+      1440
+    ],
+    "horizontalOverflow": false,
+    "brokenLocalLinks": 0,
+    "unloadedImages": 0,
+    "pageErrors": [],
+    "wordCount": 722,
+    "visualReview": "Desktop and mobile screenshots reviewed."
+  }
+}
