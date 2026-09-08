@@ -1,0 +1,35 @@
+const format = new Intl.NumberFormat('da-DK');
+const add = document.getElementById('add');
+const reset = document.getElementById('reset');
+const status = document.getElementById('counter-status');
+add.addEventListener('click', () => {
+  if (document.getElementById('sample-gift')) return;
+  const card = document.createElement('article');
+  card.id = 'sample-gift';
+  card.className = 'gift gift-shop';
+  const heading = document.createElement('div');
+  const name = document.createElement('strong');
+  name.textContent = 'Den grønne butik';
+  heading.append(name);
+  const value = document.createElement('span');
+  value.textContent = '250 kr.';
+  card.append(heading, value);
+  document.getElementById('gift-list').append(card);
+  document.getElementById('total').textContent = format.format(750);
+  document.getElementById('count').textContent = '3';
+  add.textContent = '✓ Eksempelgavekort tilføjet';
+  add.disabled = true;
+  reset.hidden = false;
+  status.textContent = '3 eksempelgavekort. Samlet værdi: 750 kr.';
+  reset.focus({preventScroll:true});
+});
+reset.addEventListener('click', () => {
+  document.getElementById('sample-gift')?.remove();
+  document.getElementById('total').textContent = format.format(500);
+  document.getElementById('count').textContent = '2';
+  add.textContent = '＋ Tilføj et eksempelgavekort';
+  add.disabled = false;
+  reset.hidden = true;
+  status.textContent = 'Prøv at tilføje et kort — overblikket følger med.';
+  add.focus({preventScroll:true});
+});
