@@ -12,3 +12,7 @@ Portfolio samples use original illustrative assets. Form previews stay in the br
 Additional nonprofit examples: [Welter homepage concept](https://severianroth.github.io/service-site-examples/welter/) and [Open Table volunteer site](https://severianroth.github.io/service-site-examples/community-kitchen/). Both include editable WordPress versions.
 
 Original frontend design: [Triple Double homepage concept](https://severianroth.github.io/service-site-examples/triple-double/), with desktop/tablet/mobile views, a layered PSD package and the design system. This example is an HTML/CSS/JavaScript homepage concept.
+
+Staffing homepage design: [TeamsOffshore](https://severianroth.github.io/service-site-examples/teams-offshore/), with service-specific enquiry previews, three responsive layouts, a brand style sheet and a source/handoff archive. This is an HTML/CSS/JavaScript concept.
+
+[Developer profile and selected work](https://severianroth.github.io/service-site-examples/developer-profile.html).

@@ -1,0 +1,45 @@
+TeamsOffshore homepage concept — Severian Roth
+
+Open index.html in a browser. Open design.html for desktop/tablet/mobile views,
+the proposed brand style sheet, and the layout rationale. No build is needed.
+
+FILES
+index.html: editable structure and all content.
+style.css: design tokens, components and responsive layouts.
+app.js: mobile navigation, service selection, local enquiry summary.
+desktop.png / tablet.png / mobile.png: 1440 / 834 / 390 px layouts.
+design.html: presentation, brand tokens, typography, icon and button treatment.
+
+WIX IMPLEMENTATION MAP
+Current public website: https://www.teamsoffshore.com/ (Wix).
+Create native sections for header, hero, principles, services, process, enquiry,
+about and footer. Apply the colors from :root in style.css to the site theme.
+Keep headings, service names, labels and body copy as native editable text.
+Use native stacks/grids for the responsive structure and the three service cards.
+Use the source at 1440, 834 and 390 px as the layout reference. Main breakpoints
+are 1050 and 650 px; the mobile menu appears below 650 px.
+
+The current demo's enquiry is local: it generates a summary and does not send
+or store a visitor's details. In the approved Wix implementation, map Service,
+Start timing, Capacity and Priorities to Wix Forms fields, add the approved
+contact fields, set the business recipient and configure a success message.
+Service links should pre-select their matching service before scrolling to the
+enquiry. The existing published appointment route can remain available.
+
+DESIGN DECISIONS
+An immediate hero CTA answers the user's next step. Three service shortcuts
+invite exploration and carry intent into the enquiry. Navy provides the main
+contrast, warm peach highlights capacity, and simple typography keeps content
+editable. CSS shapes avoid large image downloads.
+
+PROVENANCE / REUSE
+Business service names and background: https://www.teamsoffshore.com/ .
+Buyer request: https://www.freelancer.com/contest/engaging-redesign-for-teamsoffshorecom-2784152
+Original HTML/CSS design; the local enquiry pattern adapts this repository's
+Northstar intake example (commit 2e9bcc6aeff7f8ee5bff7251c0a4c4757ef6c4b6,
+GPL-2.0-or-later). It is current project-owned source and covers service routing
+and preview; the changes are branding, staffing fields and interaction details.
+Native HTML form controls and CSS Grid cover this concept without a new UI SDK.
+No third-party images, fonts or icon downloads are bundled. The TeamsOffshore
+name remains its owner's mark. This proposed homepage is ready for design review and a Wix implementation
+handoff.
