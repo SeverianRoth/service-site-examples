@@ -1,0 +1,22 @@
+{
+  "node": "v22.14.0",
+  "openSSL": "3.0.15+quic",
+  "parsedObjectsEqual": true,
+  "requests": [
+    {
+      "name": "Original serialized body",
+      "verified": true,
+      "receivedBytes": 15,
+      "equalsSignedBody": true
+    },
+    {
+      "name": "Same JSON, pretty-printed",
+      "verified": false,
+      "receivedBytes": 20,
+      "equalsSignedBody": false
+    }
+  ],
+  "externalRequests": 0,
+  "privateKeysPersisted": false,
+  "verifiedAt": 1788879144.7315342
+}

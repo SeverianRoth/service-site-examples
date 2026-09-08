@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Your JSON is equivalent. Your signature is not. — Severian Roth</title>
+  <meta name="description" content="A reproducible Node.js experiment showing how reserializing identical JSON data breaks an RSA request signature, and where to put the fix.">
+  <link rel="icon" href="data:,"><link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead"><a href="../../">SEVERIAN ROTH</a><span>Engineering notes / 01</span></header>
+  <main class="article">
+    <article>
+      <p class="kicker">API integration · Reproducible experiment</p>
+      <h1>Your JSON is equivalent.<br>Your signature is not.</h1>
+      <p class="deck">I sent the same JSON object twice. The first request verified. The second failed. Formatting changed the message I had signed.</p>
+      <div class="byline">Severian Roth · <time datetime="2026-09-08">8 September 2026</time></div>
+
+      <p>“Sign the JSON body” leaves out the part that matters: which representation of that body reaches the signer, and which reaches the server.</p>
+      <p>I built a small request-signing workbench to make that distinction visible. Then I put an HTTP server on localhost and sent two requests through Node’s <code>fetch</code>. Both bodies parsed to the same object. Only one matched the bytes I had signed.</p>
+
+      <figure>
+        <div class="comparison">
+          <div><p class="label">Signed and sent · 15 bytes</p><p class="literal">{"msg":"hello"}</p><p class="result">Signature verifies</p></div>
+          <div><p class="label">Signed compact, sent formatted · 20 bytes</p><p class="literal">{
+  "msg": "hello"
+}</p><p class="result fail">Signature does not verify</p></div>
+        </div>
+        <figcaption>Same parsed object, different UTF-8 bytes. Results come from the local HTTP reproduction linked below.</figcaption>
+      </figure>
+
+      <h2>A formatter can change the signed message</h2>
+      <p>The experiment uses RSA with SHA-256 and PKCS#1 v1.5 padding. Its message format is the UTF-8 encoding of <code>body + path + timestamp</code>. That concatenation is a compatibility example, not a proposed authentication protocol. A real integration has to use its provider’s specified format, including separators, encoding and timestamp units.</p>
+      <p>I generated a temporary 2048-bit key, serialized <code>{ msg: 'hello' }</code> once, and signed it. The first request sent that string. The second sent <code>JSON.stringify(object, null, 2)</code> with the original signature.</p>
+      <p>The receiver collected the request body before parsing JSON. It measured 15 bytes in the first request and 20 in the second. Verification returned <code>true</code>, then <code>false</code>. An assertion also confirmed that the two parsed objects were deeply equal.</p>
+      <p>The added whitespace belongs to the message. The verifier has no instruction to disregard it. The same issue appears if one side changes property order or uses a different textual representation of a value while the protocol expects exact request bytes.</p>
+
+      <h2>Give serialization one owner</h2>
+      <p>The fix I prefer is small: construct the body once, then pass that same serialized value to signing and transport. In the reproduction, the critical path is:</p>
+      <pre><code>const body = JSON.stringify({ msg: 'hello' });
+const signature = signRequest(body, path, timestamp, privateKey);
+
+await fetch(url, {
+  method: 'POST',
+  body,
+  headers: {
+    'content-type': 'application/json',
+    'x-demo-signature': signature,
+    'x-demo-timestamp': timestamp,
+  },
+});</code></pre>
+      <p>The <code>x-demo-*</code> headers belong only to this experiment. The full script starts its own receiver and closes it when both checks finish.</p>
+      <p>I would put this boundary inside the integration adapter. Callers can hand it an object; the adapter owns serialization, signing and the request body. That leaves fewer places for a later HTTP helper to helpfully serialize the data again.</p>
+      <p>A local sign/verify check alone would miss that transport mistake. Both operations could use the original string while the HTTP client sends something else. Capturing the received body is what makes this reproduction useful.</p>
+
+      <h2>Canonicalization is a protocol choice</h2>
+      <p>Sorting keys looks like an easy fix. It works only if it matches the representation the verifier expects. A provider that verifies the raw body will still reject a signature over a different, canonicalized body.</p>
+      <p><a href="https://www.rfc-editor.org/rfc/rfc8785.html">RFC 8785’s JSON Canonicalization Scheme</a> defines a deterministic representation, including serialization, property sorting and UTF-8 encoding. That is useful when both sides adopt it. Adding an informal “sort and stringify” step to one client is a different contract.</p>
+      <p>For an existing API, I would first look for its maintained SDK and a published signing vector. If those are unavailable, I want an example that specifies the exact message bytes, public key, algorithm, padding and signature. A screenshot of the JSON object cannot answer those questions.</p>
+
+      <h2>The SHA-256 trap is separate</h2>
+      <p>The workbench also tests a second mistake: hashing the assembled message before passing it to <code>sign('sha256', ...)</code>. With this RSA signing call, Node applies SHA-256 as part of signing. Passing a SHA-256 digest as its data therefore hashes the digest again.</p>
+      <p>I kept <code>node:crypto</code> in charge of the cryptography. The adapter assembles bytes and explicitly selects <code>RSA_PKCS1_PADDING</code>. The corresponding <a href="https://nodejs.org/download/release/v22.14.0/docs/api/crypto.html#cryptosignalgorithm-data-key-callback">Node documentation</a> describes the signing API and RSA padding options. A provider requiring RSA-PSS needs its corresponding settings; the two schemes are not interchangeable.</p>
+
+      <table>
+        <caption>Selected checks in the existing signing workbench</caption>
+        <thead><tr><th scope="col">Change</th><th scope="col">Original signature verifies?</th></tr></thead>
+        <tbody>
+          <tr><td>None</td><td>Yes</td></tr>
+          <tr><td>Append a space to the JSON</td><td>No</td></tr>
+          <tr><td>Change the endpoint path</td><td>No</td></tr>
+          <tr><td>Change seconds to milliseconds</td><td>No</td></tr>
+          <tr><td>Sign a precomputed digest, then verify the original message</td><td>No</td></tr>
+        </tbody>
+      </table>
+      <p>The Node signature also verified in the browser’s Web Crypto implementation, and an OpenSSL command-line check accepted the original payload and rejected a tampered one. Those checks establish local compatibility for this sample. They do not establish that a remote API accepts it, or that a timestamp is fresh enough for that API.</p>
+      <p class="pull">Before changing the key, compare the bytes at the signer with the bytes at the receiver.</p>
+
+      <div class="evidence">
+        <p><strong>Reproduce it.</strong> Clone the <a href="https://github.com/SeverianRoth/service-site-examples">sample repository</a> and run <code>node writing/json-signatures/reproduce.mjs</code>. It uses Node’s built-in HTTP and crypto modules and the existing sample adapter. It sends two requests to localhost and makes no external API calls.</p>
+        <p><a href="reproduce.mjs">Read the full reproduction</a> · <a href="reproduction-result.json">Recorded HTTP results</a> · <a href="../../rsa-request-signing/">Run the browser workbench</a> · <a href="../../rsa-request-signing/test-report.json">Workbench verification report</a></p>
+      </div>
+      <footer>Original technical writing sample. Temporary test keys stay in memory. Code in this example is MIT licensed.</footer>
+    </article>
+  </main>
+</body>
+</html>
