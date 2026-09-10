@@ -1,0 +1,58 @@
+{
+  "testedAt": "2026-09-10T01:20:29.819296+00:00",
+  "platform": "win32",
+  "python": "3.13.7",
+  "dependencies": {
+    "pypdf": "6.18.0",
+    "openpyxl": "3.1.5"
+  },
+  "passed": 11,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "Real PDF retains all eight requested lines",
+      "passed": true
+    },
+    {
+      "name": "Approved prices give three matches and USD66.75 incomplete subtotal",
+      "passed": true
+    },
+    {
+      "name": "Unknown code, unit mismatch, missing price, ambiguous code and zero quantity each require review",
+      "passed": true
+    },
+    {
+      "name": "Unresolved quotation has no full total",
+      "passed": true
+    },
+    {
+      "name": "Written XLSX preserves all rows, five review entries and withheld total",
+      "passed": true
+    },
+    {
+      "name": "An RFQ-supplied price cannot replace the approved list",
+      "passed": true
+    },
+    {
+      "name": "Two approved entries for the same code are flagged",
+      "passed": true
+    },
+    {
+      "name": "Non-finite, negative and over-precision prices require review",
+      "passed": true
+    },
+    {
+      "name": "Fractional quantity is flagged under the declared whole-unit scope",
+      "passed": true
+    },
+    {
+      "name": "Source description is stored as literal text, not an Excel formula",
+      "passed": true
+    },
+    {
+      "name": "A second PDF with changed quantities is extracted and priced independently",
+      "passed": true
+    }
+  ],
+  "scope": "Synthetic PDF/catalogue/Excel VERTICAL SLICE. No n8n runtime, client data or remote service involved."
+}

@@ -1,0 +1,30 @@
+SYNTHETIC RFQ
+
+
+RFQ-DEMO-01
+
+
+LINES 8
+
+
+ITEM  CODE    DESCRIPTION                   QTY  UNIT
+
+1     SW-01   Wall switch                   3    EA
+
+2     CB-16   Circuit breaker 16A           2    EA
+
+3     CB-99   Unknown breaker               1    EA
+
+4     RL-02   Relay                         2    BOX
+
+5     FU-05   Fuse 5A                       4    EA
+
+6     DB-10   Distribution board            1    EA
+
+7     SW-01   Wall switch                   0    EA
+
+8     CB-16   Additional breaker            1    EA
+
+
+
+END RFQ

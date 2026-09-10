@@ -1,0 +1,106 @@
+{
+  "state": "DRAFT FOR HUMAN APPROVAL",
+  "price_list": "LIST-DEMO-202609",
+  "rows": [
+    {
+      "line": 1,
+      "code": "SW-01",
+      "description": "Wall switch",
+      "quantity": "3",
+      "unit": "EA",
+      "status": "MATCHED",
+      "reason": "Exact code and unit; approved price",
+      "unit_price_usd": "9.50",
+      "line_total_usd": "28.50",
+      "price_list": "LIST-DEMO-202609"
+    },
+    {
+      "line": 2,
+      "code": "CB-16",
+      "description": "Circuit breaker 16A",
+      "quantity": "2",
+      "unit": "EA",
+      "status": "MATCHED",
+      "reason": "Exact code and unit; approved price",
+      "unit_price_usd": "12.75",
+      "line_total_usd": "25.50",
+      "price_list": "LIST-DEMO-202609"
+    },
+    {
+      "line": 3,
+      "code": "CB-99",
+      "description": "Unknown breaker",
+      "quantity": "1",
+      "unit": "EA",
+      "status": "REVIEW",
+      "reason": "Unknown product code",
+      "unit_price_usd": "",
+      "line_total_usd": "",
+      "price_list": "LIST-DEMO-202609"
+    },
+    {
+      "line": 4,
+      "code": "RL-02",
+      "description": "Relay",
+      "quantity": "2",
+      "unit": "BOX",
+      "status": "REVIEW",
+      "reason": "Requested unit differs from catalogue unit",
+      "unit_price_usd": "",
+      "line_total_usd": "",
+      "price_list": "LIST-DEMO-202609"
+    },
+    {
+      "line": 5,
+      "code": "FU-05",
+      "description": "Fuse 5A",
+      "quantity": "4",
+      "unit": "EA",
+      "status": "REVIEW",
+      "reason": "No approved price",
+      "unit_price_usd": "",
+      "line_total_usd": "",
+      "price_list": "LIST-DEMO-202609"
+    },
+    {
+      "line": 6,
+      "code": "DB-10",
+      "description": "Distribution board",
+      "quantity": "1",
+      "unit": "EA",
+      "status": "REVIEW",
+      "reason": "Ambiguous catalogue code",
+      "unit_price_usd": "",
+      "line_total_usd": "",
+      "price_list": "LIST-DEMO-202609"
+    },
+    {
+      "line": 7,
+      "code": "SW-01",
+      "description": "Wall switch",
+      "quantity": "0",
+      "unit": "EA",
+      "status": "REVIEW",
+      "reason": "Quantity must be a positive whole number",
+      "unit_price_usd": "",
+      "line_total_usd": "",
+      "price_list": "LIST-DEMO-202609"
+    },
+    {
+      "line": 8,
+      "code": "CB-16",
+      "description": "Additional breaker",
+      "quantity": "1",
+      "unit": "EA",
+      "status": "MATCHED",
+      "reason": "Exact code and unit; approved price",
+      "unit_price_usd": "12.75",
+      "line_total_usd": "12.75",
+      "price_list": "LIST-DEMO-202609"
+    }
+  ],
+  "matched_lines": 3,
+  "review_lines": 5,
+  "matched_subtotal_usd": "66.75",
+  "quotation_total_usd": null
+}
